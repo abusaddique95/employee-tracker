@@ -1,74 +1,64 @@
-const questions = {
-  type: "list",
-  message: "Please select a category:",
-  name: "category",
-  choices: [
-    {
-      value: "viewDepartments",
-      name: "View All Departments",
-      short: "viewDepartments",
-    },
-    {
-      value: "viewAllRoles",
-      name: "View All Roles",
-      short: "viewAllRoles",
-    },
-    {
-      value: "viewAllEmployees",
-      name: "View All Employees",
-      short: "viewDepartments",
-    },
-    {
-      value: "addDepartment",
-      name: "Add a Department",
-      short: "addDepartment",
-    },
-    {
-      value: "addRole",
-      name: "Add a Role",
-      short: "addRole",
-    },
-    {
-      value: "addEmployee",
-      name: "Add an Employee",
-      short: "addEmployee",
-    },
-    {
-      value: "updateEmployee",
-      name: "Update an Employee's Manager",
-      short: "updateEmployee",
-    },
-    {
-      value: "viewEmployeesByDepartment",
-      name: "View All Employees by Department",
-      short: "viewEmployeesByDepartment",
-    },
-    {
-      value: "viewEmployeesByManager",
-      name: "View All Employees by Manager",
-      short: "viewEmployeesByManager",
-    },
-    {
-      value: "removeDepartment",
-      name: "Remove a Department",
-      short: "removeDepartment",
-    },
-    {
-      value: "removeRole",
-      name: "Remove a Role",
-      short: "removeRole",
-    },
-    {
-      value: "removeEmployee",
-      name: "Remove an Employee",
-      short: "removeEmployee",
-    },
-    {
-      value: "quit",
-      name: "Quit application",
-      short: "quit",
-    },
-  ],
-};
+const inquirer = require("inquirer");
 
-module.exports = questions;
+const questions = [
+  {
+    type: "list",
+    message: "Please select a category:",
+    name: "category",
+    choices: [
+      "View all departments",
+      "View all roles",
+      "View all employees",
+      "Add a department",
+      "Add a role",
+      "Add an employee",
+      "Update an employee's role",
+      "Update an employee's manager",
+      "Quit",
+    ],
+  },
+];
+
+const addDepartment = [
+  {
+    type: "input",
+    message: "please enter the department Name",
+    name: "departmentName",
+  },
+];
+
+const addEmployees = [
+  {
+    type: "input",
+    message: "please enter employees first name",
+    name: "firstName",
+  },
+  {
+    type: "input",
+    message: "please enter employees last name",
+    name: "lastName",
+  },
+  {
+    type: "input",
+    message: "Please enter managers name",
+    name: "managerName",
+  },
+  {
+    type: "input",
+    message: "what is the employees role?",
+    name: "role",
+  },
+];
+const addRole = [
+  {
+    type: "input",
+    message: "please enter the role name",
+    name: "roleName",
+  },
+];
+
+module.exports = {
+  addDepartment,
+  addEmployees,
+  addRole,
+};
