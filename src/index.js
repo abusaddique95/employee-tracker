@@ -33,9 +33,35 @@ const init = async () => {
 
     if (selection === "View all departments") {
       const departments = await executeQuery("SELECT * FROM departments");
-      console.log(departments);
+      console.table(departments);
     }
-    // if the user selects quit, change inProgress to false
+    if (selection === "View all roles") {
+      const roles = await executeQuery(`SELECT 
+      roles.id,
+      roles.title AS role,
+      roles.salary,
+      departments.department_name AS department
+      FROM roles
+      INNER JOIN departments ON departments.id=roles.department_id
+      ORDER BY department;`);
+
+      console.table(roles);
+    }
+    if (selection === "viewAllEmployees") {
+      const employees = await executeQuery(`SELECT e.id,
+      CONCAT(e.first_name,' ',
+             e.last_name) AS employee,
+             r.salary, r.title,
+             d.department_name,
+            CONCAT(m.first_name,' ',
+             m.last_name) AS manager
+      FROM employees AS e
+        LEFT JOIN employees AS m 
+        ON e.manager_id = m.id INNER JOIN roles r ON e.role_id = r.id LEFT JOIN departments d ON r.department_id = d.id
+        ORDER BY e.last_name;
+      `);
+      console.table(employees);
+    }
   }
 };
 init();
