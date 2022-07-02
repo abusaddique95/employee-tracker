@@ -1,5 +1,5 @@
 USE company_db;
 
-INSERT INTO departments (depName) 
-VALUES 
-("Finance"), ("Sales"), ("Engineering"), ("HR"), ("IT");
+INSERT INTO departments (departmentName) VALUES ("Finance");
+INSERT INTO departments (departmentName) VALUES ("IT");
+INSERT INTO departments (departmentName) VALUES ("HR");

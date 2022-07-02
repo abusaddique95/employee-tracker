@@ -61,4 +61,5 @@ module.exports = {
   addDepartment,
   addEmployees,
   addRole,
+  questions,
 };

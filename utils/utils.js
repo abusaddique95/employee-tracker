@@ -1,16 +1,25 @@
-const mysql2 = require("mysql2");
-const { dbConfig } = require("./config");
+const mysql = require("mysql2");
+const db = require("./config");
 
-// connect to sql
-const db = mysql2.createConnection(dbConfig);
+const getDepartments = async (db) => {
+  await db.query(
+    `INSERT INTO departments (departmentName) VALUES ("${departmentAnswers.name}")`
+  ); //console.log("data: " + JSON.stringify(departments));
+  //console.table(departments);
+};
+const getRoles = async () => {
+  const db = await mysql.createConnection(dbConfig);
+  const roles = await db.query("SELECT * FROM roles");
+  console.table(roles);
+};
+const getEmployees = async () => {
+  const db = await mysql.createConnection(dbConfig);
+  const employees = await db.query("SELECT * FROM employees");
+  console.table(employees);
+};
 
-const getDepartments = (deptFromDb) => {};
-const getRoles = () => {
-  roleFromDb;
-};
-const getEmployees = () => {
-  employeeFromDb;
-};
-const getManagers = () => {
-  managerFromDb;
+module.exports = {
+  getDepartments,
+  getRoles,
+  getEmployees,
 };
