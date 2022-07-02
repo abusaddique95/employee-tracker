@@ -13,6 +13,7 @@ const init = async () => {
   let inProgress = true;
 
   while (inProgress) {
-    const questions = await answers(questions);
+    // let { askQuestions } = await inquirer.prompt(questions);
   }
 };
+init();
