@@ -4,7 +4,7 @@ const questions = [
   {
     type: "list",
     message: "Please select a category:",
-    name: "category",
+    name: "selection",
     choices: [
       "View all departments",
       "View all roles",
