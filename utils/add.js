@@ -17,5 +17,7 @@ const addNewRole = async (db, roleAnswers) => {
 };
 
 module.exports = {
-  addQuestions,
+  addNewDepartment,
+  addNewEmployee,
+  addNewRole,
 };

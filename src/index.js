@@ -10,7 +10,11 @@ const {
   questions,
 } = require("../utils/questions");
 
-const { addQuestions } = require("../utils/add");
+const {
+  addNewDepartment,
+  addNewEmployee,
+  addNewRole,
+} = require("../utils/add");
 
 const { getDepartments, getRoles, getEmployees } = require("../utils/utils");
 
@@ -44,17 +48,7 @@ const init = async () => {
     if (selection === "view all employees") {
       // const employees = await executeQuery(`SELECT * FROM employees`);
       // console.table(employees);
-      const query = `SELECT e.id,
-      CONCAT(e.firstName,' ',
-             e.lastName) AS employee,
-             r.salary, r.title,
-             d.departments,
-            CONCAT(m.firstName,' ',
-             m.lastName) AS manager
-      FROM employees AS e
-        LEFT JOIN employees AS m
-        ON e.managerId = m.id INNER JOIN roles r ON e.roleId = r.id LEFT JOIN departments d ON r.departmentId = d.id
-        ORDER BY e.lastName;`;
+      const query = "SELECT * FROM employees";
       const data = await executeQuery(query);
       console.table(data);
     }
