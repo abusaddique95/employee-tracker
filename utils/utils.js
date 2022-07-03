@@ -9,18 +9,18 @@ const getRoles = async (db) => {
   console.table(roles);
 };
 const getEmployees = async (db) => {
-  `
-  SELECT 
-    CONCAT(E.FIRST_NAME,' ', E.LAST_NAME) AS 'EMPLOYEE',
-    E.ID,
-    R.SALARY,
-    R.TITLE,
-    D.NAME AS 'DEPT NAME',
-    CONCAT( M.FIRST_NAME,' ', M.LAST_NAME) AS MANAGER
-  FROM EMPLOYEE AS E 
-    LEFT JOIN EMPLOYEE AS M  ON E.MANAGER_ID = M.ID 
-    INNER JOIN ROLE R ON E.ROLE_ID = R.ID 
-    LEFT JOIN DEPARTMENT D ON R.DEPARTMENT_ID = D.ID ;`;
+  const [employees] = await db.query(`SELECT e.id,
+  CONCAT(e.firstName,' ',
+         e.lastName) AS employee,
+         r.salary, r.title,
+         d.departments,
+        CONCAT(m.firstName,' ',
+         m.lastName) AS manager
+  FROM employees AS e
+    LEFT JOIN employees AS m 
+    ON e.managerId = m.id INNER JOIN roles r ON e.roleId = r.id LEFT JOIN departments d ON r.departmentId = d.id
+    ORDER BY e.lastName;`);
+  console.table(employees);
 };
 
 module.exports = {

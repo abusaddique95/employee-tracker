@@ -10,6 +10,8 @@ const {
   questions,
 } = require("../utils/questions");
 
+const { addQuestions } = require("../utils/add");
+
 const { getDepartments, getRoles, getEmployees } = require("../utils/utils");
 
 // frameworks
@@ -39,21 +41,42 @@ const init = async () => {
       const roles = await executeQuery("SELECT * FROM roles");
       console.table(roles);
     }
-    if (selection === "viewAllEmployees") {
-      const employees = await executeQuery(`SELECT e.id,
-      CONCAT(e.first_name,' ',
-             e.last_name) AS employee,
+    if (selection === "view all employees") {
+      // const employees = await executeQuery(`SELECT * FROM employees`);
+      // console.table(employees);
+      const query = `SELECT e.id,
+      CONCAT(e.firstName,' ',
+             e.lastName) AS employee,
              r.salary, r.title,
-             d.department_name,
-            CONCAT(m.first_name,' ',
-             m.last_name) AS manager
+             d.departments,
+            CONCAT(m.firstName,' ',
+             m.lastName) AS manager
       FROM employees AS e
-        LEFT JOIN employees AS m 
-        ON e.manager_id = m.id INNER JOIN roles r ON e.role_id = r.id LEFT JOIN departments d ON r.department_id = d.id
-        ORDER BY e.last_name;
-      `);
-      console.table(employees);
+        LEFT JOIN employees AS m
+        ON e.managerId = m.id INNER JOIN roles r ON e.roleId = r.id LEFT JOIN departments d ON r.departmentId = d.id
+        ORDER BY e.lastName;`;
+      const data = await executeQuery(query);
+      console.table(data);
     }
+    if (selection === "addDepartment") {
+      const addQuery = await inquirer.prompt(addDepartment);
+      const query = `INSERT INTO departments (name) VALUES ("${addQuery.name}")`;
+      await executeQuery(query);
+      console.log("new department created");
+    }
+
+    // if (selection === "addEmployees") {
+
+    //   const roleQuery = "SELECT * FROM roles";
+    //   const allRoles = await executeQuery(roleQuery);
+
+    //   const employee = "SELECT * FROM employees";
+    //   const employees = await executeQuery(employee);
+
+    //   const department = employees.map((employees) => {
+
+    //   }
+    //   )
   }
 };
 init();
