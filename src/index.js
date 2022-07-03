@@ -36,15 +36,7 @@ const init = async () => {
       console.table(departments);
     }
     if (selection === "View all roles") {
-      const roles = await executeQuery(`SELECT 
-      roles.id,
-      roles.title AS role,
-      roles.salary,
-      departments.department_name AS department
-      FROM roles
-      INNER JOIN departments ON departments.id=roles.department_id
-      ORDER BY department;`);
-
+      const roles = await executeQuery("SELECT * FROM roles");
       console.table(roles);
     }
     if (selection === "viewAllEmployees") {

@@ -5,7 +5,7 @@ const getDepartments = async (db) => {
   console.table(departments);
 };
 const getRoles = async (db) => {
-  const [roles] = await db.query("SELECT * FROM role");
+  const [roles] = await db.query("SELECT * FROM roles");
   console.table(roles);
 };
 const getEmployees = async (db) => {
