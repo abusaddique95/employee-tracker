@@ -1,5 +1,3 @@
-const inquirer = require("inquirer");
-
 const questions = [
   {
     type: "list",
@@ -22,7 +20,7 @@ const questions = [
 const addDepartment = [
   {
     type: "input",
-    message: "please enter the department Name",
+    message: "Please enter the department name",
     name: "departmentName",
   },
 ];
@@ -49,6 +47,7 @@ const addEmployees = [
     name: "role",
   },
 ];
+
 const addRole = [
   {
     type: "input",

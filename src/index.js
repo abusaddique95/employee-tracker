@@ -41,16 +41,16 @@ const init = async () => {
       const departments = await executeQuery("SELECT * FROM departments");
       console.table(departments);
     }
+
     if (selection === "View all roles") {
-      const roles = await executeQuery("SELECT * FROM roles");
+      const roles = await executeQuery(
+        "SELECT roles.id, roles.title, roles.salary, departments.name AS department FROM roles INNER JOIN departments ON roles.departmentId=departments.id"
+      );
       console.table(roles);
     }
+
     if (selection === "View all employees") {
-      // const employees = await executeQuery(`SELECT * FROM employees`);
-      // console.table(employees);
-      // const query = `SELECT  *
-      // FROM employees`;
-      const query = `SELECT  employees.id, firstName, lastName, title, salary, departments.name
+      const query = `SELECT employees.id, firstName, lastName, title AS role, salary, departments.name AS department
         FROM employees
         INNER JOIN roles
         ON employees.roleId=roles.id
@@ -60,17 +60,18 @@ const init = async () => {
       const data = await executeQuery(query);
       console.table(data);
     }
+
     if (selection === "Add a department") {
       const addQuery = await inquirer.prompt(addDepartment);
       const query = `INSERT INTO departments (name) VALUES ("${addQuery.departmentName}")`;
       await executeQuery(query);
       console.log("new department created");
     }
-    if (selection === "Add a role") {
-      const queryOne = `SELECT * FROM departments;`;
-      const result = await executeQuery(queryOne);
 
-      const arr = result.map((department) => ({
+    if (selection === "Add a role") {
+      const departments = await executeQuery(`SELECT * FROM departments;`);
+
+      const departmentChoices = departments.map((department) => ({
         name: department.name,
         value: department.id,
       }));
@@ -90,27 +91,67 @@ const init = async () => {
           type: "list",
           name: "deptId",
           message: "What is this role's department that it is associated with?",
-          choices: arr,
+          choices: departmentChoices,
         },
       ]);
 
-      console.log(answer);
       const addingRole = `INSERT INTO roles (title, salary, departmentId) VALUES ("${answer.newTitle}", "${answer.newSalary}", "${answer.deptId}")`;
       await executeQuery(addingRole);
+
+      console.log("new role created");
     }
 
-    // if (selection === "addEmployees") {
+    if (selection === "Add an employee") {
+      const roles = await executeQuery("SELECT * FROM roles");
 
-    //   const roleQuery = "SELECT * FROM roles";
-    //   const allRoles = await executeQuery(roleQuery);
+      const roleChoices = roles.map((roles) => ({
+        name: roles.title,
+        value: roles.id,
+      }));
 
-    //   const employee = "SELECT * FROM employees";
-    //   const employees = await executeQuery(employee);
+      const employees = await executeQuery("SELECT * FROM employees");
 
-    //   const department = employees.map((employees) => {
+      const employeeChoices = employees.map((employee) => ({
+        name: `${employee.firstName} ${employee.lastName}`,
+        value: employee.id,
+      }));
 
-    //   }
-    //   )
+      const answer = await inquirer.prompt([
+        {
+          type: "input",
+          message: "please enter employees first name",
+          name: "firstName",
+        },
+        {
+          type: "input",
+          message: "please enter employees last name",
+          name: "lastName",
+        },
+        {
+          type: "list",
+          message: "what is the employees role?",
+          name: "roleId",
+          choices: roleChoices,
+        },
+        {
+          type: "list",
+          message: "Please choose manager",
+          name: "managerId",
+          choices: employeeChoices,
+        },
+      ]);
+
+      const addingRole = `INSERT INTO employees (firstName, lastName, roleId, managerId ) VALUES ("${answer.firstName}", "${answer.lastName}", "${answer.roleId}", "${answer.managerId}")`;
+      await executeQuery(addingRole);
+
+      console.log("created new employee");
+    }
+
+    if (selection === "Quit") {
+      inProgress = false;
+      process.exit(0);
+    }
   }
 };
+
 init();
