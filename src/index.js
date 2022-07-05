@@ -1,5 +1,7 @@
+// frameworks
 require("dotenv").config();
-
+const mysql = require("mysql2/promise");
+const path = require("path");
 const inquirer = require("inquirer");
 
 const initDatabase = require("../utils/config");
@@ -9,19 +11,6 @@ const {
   addRole,
   questions,
 } = require("../utils/questions");
-
-const {
-  addNewDepartment,
-  addNewEmployee,
-  addNewRole,
-} = require("../utils/add");
-
-const { getDepartments, getRoles, getEmployees } = require("../utils/utils");
-
-// frameworks
-const mysql = require("mysql2/promise");
-const path = require("path");
-// const dbConfig = require("../utils/config");
 
 // while loop to ask questions
 const init = async () => {
