@@ -24,9 +24,19 @@ WHEN I choose to update an employee role
 THEN I am prompted to select an employee to update and their new role and this information is updated in the database
 ```
 
+## Install
+
+```
+npm install
+npm i inquirer
+
+Start execution
+npm run start
+```
+
 ## Demo Video
 
-to be added
+[Demo](https://drive.google.com/file/d/1fLHtKE6cksE_ZXEfiHJxj-hfibr_lzIx/view)
 
 ## Technologies
 
